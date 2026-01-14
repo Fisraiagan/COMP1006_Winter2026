@@ -43,11 +43,11 @@ echo "<p>" . add($num1, $num2) . "</p>";
 /* Add declare(strict_types=1) and type hints 
 //strict types tell PHP not to automatically convert values when calling functions. Type hints tell PHP what to expect */
 
-function add(int $num1, int $num2): int {
+/*function add(int $num1, int $num2): int {
     return $num1 + $num2;
 }
 echo add($num1, $num2);
-
+*/
 
 //6. OOP with PHP 
 
