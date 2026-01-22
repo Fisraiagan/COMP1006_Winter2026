@@ -7,7 +7,17 @@
     How can we refactor this code so it’s easier to maintain?
 */
 
+/*I learned how to store data in arrays 
+and use functions to loop through them.*/ 
+
 $items = ["Home", "About", "Contact"];
+
+function itemLoop($items) {
+    foreach($items as $item) {
+        echo "<li>$item</li>";
+    }
+
+}
 
 ?>
 
@@ -21,10 +31,9 @@ $items = ["Home", "About", "Contact"];
 <h1>Welcome</h1>
 
 <ul>
-<?php foreach ($items as $item): ?>
-    <li><?= $item ?></li>
-<?php endforeach; ?>
+<?php itemLoop($items);?>
 </ul>
+
 
 <footer>
     <p>&copy; 2026</p>
