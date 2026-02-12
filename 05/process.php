@@ -6,6 +6,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request');
 }
 
+if(!isset($pdo)||$pdo == null) {
+    die('Database connection failed');
+}
+
 //sanitize input 
 // trim() removes extra whitespace at the start/end of user input.
 // filter_input() helps sanitize incoming form data.
@@ -88,7 +92,34 @@ if (!empty($errors)) {
 /* 
 INSERT THE ORDER USING A PREPARED STATEMENT
 */
+$sql="INSERT INTO orders (first_name, last_name, email, phone, address, comments,
+chaos_croissant,midnight_muffin,existential_eclair,procrastination_cookie,finals_week_brownie) 
+      values (:first_name, :last_name, :email, :phone, :address, :comments,:chaos_croissant,:midnight_muffin,:existential_eclair,:procrastination_cookie,:finals_week_brownie)";
 
+
+// pull from itemsordered array and store in variables
+$chaosCroissantQty = $itemsOrdered['chaos_croissant'] ?? 0;
+$midnightMuffinQty = $itemsOrdered['midnight_muffin'] ?? 0;
+$existentialEclairQty = $itemsOrdered['existential_eclair'] ?? 0;
+$procrastinationCookieQty = $itemsOrdered['procrastination_cookie'] ?? 0;
+$finalsWeekBrownieQty = $itemsOrdered['finals_week_brownie'] ?? 0;   
+
+      //prepare the statement
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':first_name', $firstName);
+$stmt->bindParam(':last_name', $lastName);
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':phone', $phone);
+$stmt->bindParam(':address', $address);
+$stmt->bindParam(':comments', $comments);
+
+$stmt->bindParam(':chaos_croissant', $chaosCroissantQty);
+$stmt->bindParam(':midnight_muffin', $midnightMuffinQty);   
+$stmt->bindParam(':existential_eclair', $existentialEclairQty);
+$stmt->bindParam(':procrastination_cookie', $procrastinationCookieQty);
+$stmt->bindParam(':finals_week_brownie', $finalsWeekBrownieQty);
+
+$stmt->execute();
 ?>
 
 <!--Confirmation Message -->
